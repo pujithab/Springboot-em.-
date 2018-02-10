@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -15,6 +16,7 @@ import com.example.demo.dao.EmployeeDao;
 import com.example.demo.dao.TestDao;
 import com.example.demo.model.Employee;
 import com.example.demo.model.Test;
+
 
 @Controller
 public class HomeController {
@@ -40,7 +42,14 @@ public class HomeController {
 	
 	
 	
-	
+	@RequestMapping("/view")
+	public String viewEmployees(Model model) {
+		List<Employee> list =edao.Employeeview();
+		for(Employee Details: list) {
+			System.out.println("id="+Details.getId() +"\nname="+Details.getName() +"\nfname="+Details.getFname());
+		}
+		return "test1";
+	}
 	
 	@RequestMapping("/test1")
 	public String test1(Model model) {

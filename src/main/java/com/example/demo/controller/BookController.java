@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -21,17 +23,66 @@ public class BookController {
 	
 	@RequestMapping("/booktest")
 	public String booktest(Model model) {
-		model.addAttribute("testBook", new Book());		
+		model.addAttribute("testBook", new Book());	
+		
+		/*bdao.BookUpdate();
+		bdao.BookDelete();*/
 		return "book";
+		
 	}
+	
 	@RequestMapping(value = "/booktest", method = RequestMethod.POST)
-	public String saveAdmin(@Valid @ModelAttribute  Book book) throws IOException {
+	public String saveAdmin(@Valid @ModelAttribute  Book book,Model model) throws IOException {
 		
 		bdao.saveBook(book);
+		List<Book> list=bdao.BookView();
+		model.addAttribute("booksList", list);
+		model.addAttribute("pujitha", "borra");
 
-		return "redirect:/booktest";
+		return "bookView";
 	} 
 	
+	
+	
+	
+	/*@RequestMapping(value = "/bookview", method = RequestMethod.GET)
+	public String viewBooks(Model model)  {
+		
+		
+		model.addAttribute("booksList", list);
+				
+		for(Book Details:list) {
+			System.out.println("id="+Details.getId()+"name="+Details.getName());
+		}
+		
+		return "bookView";
+		
+
+	} */
+	
+	@RequestMapping(value = "/bookupdate", method = RequestMethod.GET)
+	public void BookUpdate()  {
+		
+		bdao.BookUpdate();
+		
+
+	} 
+	
+	@RequestMapping(value = "/bookDelete", method = RequestMethod.GET)
+	public void BookDelete()  {
+		
+		bdao.BookDelete();
+		
+
+	} 
+	
+	@RequestMapping(value = "/Delete/{id}", method = RequestMethod.GET)	
+	public void delete(@PathVariable("id") int itemId, Model model) {
+
+	    bdao.BookDelete(itemId); 
+
+
+	}
 	
 
 }
