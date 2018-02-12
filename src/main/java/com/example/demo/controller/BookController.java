@@ -33,15 +33,33 @@ public class BookController {
 	
 	@RequestMapping(value = "/booktest", method = RequestMethod.POST)
 	public String saveAdmin(@Valid @ModelAttribute  Book book,Model model) throws IOException {
-		
+		int result=bdao.RecordExistsOrNot(book);
+		if(result == 1)
+		{
 		bdao.saveBook(book);
+		}
+		else
+		{
+			return "redirect/book";
+		}
 		List<Book> list=bdao.BookView();
 		model.addAttribute("booksList", list);
-		model.addAttribute("pujitha", "borra");
-
 		return "bookView";
 	} 
 	
+	
+	/*@RequestMapping(value = "/bookupdate", method = RequestMethod.GET)
+	public void BookUpdate()  {
+		
+		bdao.BookUpdate();
+	}*/
+	@RequestMapping(value = "/bookupdate/{id}", method = RequestMethod.GET)	
+	public String update(@PathVariable("id") int itemId, Model model) {
+
+	    bdao.BookUpdate(itemId);
+		return null; 
+
+	}
 	
 	
 	
@@ -60,26 +78,21 @@ public class BookController {
 
 	} */
 	
-	@RequestMapping(value = "/bookupdate", method = RequestMethod.GET)
-	public void BookUpdate()  {
-		
-		bdao.BookUpdate();
-		
 
-	} 
-	
+	/*
 	@RequestMapping(value = "/bookDelete", method = RequestMethod.GET)
 	public void BookDelete()  {
 		
 		bdao.BookDelete();
 		
 
-	} 
+	} */
 	
 	@RequestMapping(value = "/Delete/{id}", method = RequestMethod.GET)	
-	public void delete(@PathVariable("id") int itemId, Model model) {
+	public String delete(@PathVariable("id") int itemId, Model model) {
 
-	    bdao.BookDelete(itemId); 
+	    bdao.BookDelete(itemId);
+		return "redirect:../bookView"; 
 
 
 	}

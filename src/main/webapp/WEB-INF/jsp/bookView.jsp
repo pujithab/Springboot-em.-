@@ -41,6 +41,7 @@ th, td {
 			<th>name</th>
 			<th>author</th>
 			<th>quantity</th>
+			<th>options</th>
 		</tr>
 		<c:forEach var="list" items="${booksList}">
 			 <tr class="active">
@@ -48,12 +49,13 @@ th, td {
 				<td>${list.name }</td>
 				<td>${list.author}</td>
 				<td>${list.quantity}</td>
+				<td><a href="<c:url value='/Delete/${list.id}' />" >Delete</a></td>
+				
 			</tr>
 		</c:forEach>
 		 </table>
 </div>
 	
-prepared by ${pujitha}
 
 
 

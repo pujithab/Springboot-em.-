@@ -28,6 +28,19 @@ public class BookDao {
 
 	}
 	
+public int RecordExistsOrNot(Book book ) {
+		
+	String hq="from  Book where name=:n ";
+	Query query=entityManager.createQuery(hq);
+	
+	query.setParameter("n",book.getName()); 
+	int status =query.getFirstResult();
+	
+	System.out.println(status);
+	return status;
+
+	}
+	
 	
 	public List<Book> BookView()
 	{
@@ -42,8 +55,21 @@ public class BookDao {
 		}
 		return booksList1;
 	}
+	
+	public void BookUpdate(int id) {
+		
+		String hq="update Book set name=:n where id=:i";
+		Query query=entityManager.createQuery(hq);
+		
+		query.setParameter("i",id); 
+		
+		int status=query.executeUpdate(); 
+		
+		System.out.println(status);
+		
+	}
 
-		public void BookUpdate() {
+		/*public void BookUpdate() {
 			
 		List<Book> booksList2 =new ArrayList<Book>();
 		String ql ="update Book set name=:n where id=:i";
@@ -60,15 +86,15 @@ public class BookDao {
 			System.out.println("id="+Details.getId()+"name="+Details.getName());
 		}
 		
-		}
+		}*/
 		
-		public void BookDelete() {
+		/*public void BookDelete() {
 			
 			String hq="delete from Book where id=1";
 			Query query=entityManager.createQuery(hq);
 			query.executeUpdate();
 		}
-		
+		*/
 		
 public void BookDelete(int id) {
 			
