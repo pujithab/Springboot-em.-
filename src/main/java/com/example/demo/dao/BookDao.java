@@ -30,14 +30,21 @@ public class BookDao {
 	
 public int RecordExistsOrNot(Book book ) {
 		
-	String hq="from  Book where name=:n ";
+	String hq="from  Book where name=:n and author=:a and quantity=:q";
 	Query query=entityManager.createQuery(hq);
 	
-	query.setParameter("n",book.getName()); 
-	int status =query.getFirstResult();
+	query.setParameter("n",book.getName());
+	query.setParameter("a",book.getAuthor());
+	query.setParameter("q",book.getQuantity());
+	List list =query.getResultList();
 	
-	System.out.println(status);
-	return status;
+	if(list.size()>0)
+	{
+		return 0;
+	}
+	else
+	
+	return 1;
 
 	}
 	
@@ -62,7 +69,7 @@ public int RecordExistsOrNot(Book book ) {
 		Query query=entityManager.createQuery(hq);
 		
 		query.setParameter("i",id); 
-		
+		//query.setParameter("n",book.getName()); 
 		int status=query.executeUpdate(); 
 		
 		System.out.println(status);
@@ -96,7 +103,7 @@ public int RecordExistsOrNot(Book book ) {
 		}
 		*/
 		
-public void BookDelete(int id) {
+public int BookDelete(int id) {
 			
 			String hq="delete from Book where id=:i";
 			Query query=entityManager.createQuery(hq);
@@ -106,9 +113,28 @@ public void BookDelete(int id) {
 			int status=query.executeUpdate(); 
 			
 			System.out.println(status);
+			return status;
 			
 		}
+
+public Book getBookById(int id) {
+	/*String hq="from Book where id=:i";
+	Query query=entityManager.createQuery(hq);
+	query.setParameter("i",id1);
+	Object  b=  query.getSingleResult();
+	return b;*/
 	
+	
+	Book ud =entityManager.find(Book.class,id);
+	return ud;
+}
+
+public void updateBook(Book book) {
+
+	entityManager.merge(book);
+	
+}
+
 			
 }
 

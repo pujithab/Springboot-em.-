@@ -13,7 +13,13 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>View Books</title>
-
+<script type="text/javascript">
+window.setTimeout(function() {
+    $(".msgcss").fadeTo(500, 0).slideUp(500, function(){
+        $(this).remove(); 
+    });
+}, 5000);
+</script>
 <!-- <style>
 table, th, td {
 	border: 1px solid black;
@@ -26,13 +32,18 @@ th, td {
 }
 </style> -->
 </head>
-<body>
+<<div>
 
-	<%-- <table style="width: 100%">
-		<caption>Books Details</caption> --%>
-		
-		<div class="container field">
-		
+
+       <c:if test ="${not empty msg}"> 
+				<div class="col-sm-12" style="margin-bottom: -1.3em;">
+					<div class="form-group">
+						<div class="msgcss fadeIn animated alert alert-danger" style="text-align: center;">${msg}</div>
+					</div>
+				</div>
+			</c:if>
+
+</div>
   <h2>Books Details</h2>
 <table class="table table-bordered table-hover">
  
@@ -49,8 +60,8 @@ th, td {
 				<td>${list.name }</td>
 				<td>${list.author}</td>
 				<td>${list.quantity}</td>
-				<td><a href="<c:url value='/Delete/${list.id}' />" >Delete</a></td>
-				
+				<td><a href="/Delete/${list.id}"> Delete</a>D/td>
+				<td><a href="/Edit/${list.id}"> Edit</a>D/td>
 			</tr>
 		</c:forEach>
 		 </table>
