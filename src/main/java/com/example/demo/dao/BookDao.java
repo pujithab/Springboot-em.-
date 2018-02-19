@@ -19,25 +19,17 @@ import com.example.demo.model.Book;
 public class BookDao {
 	@PersistenceContext
     private EntityManager entityManager;
-	
-	
 	public void saveBook(Book book ) {
-		
-		
 		entityManager.persist(book);
-
 	}
 	
 public int RecordExistsOrNot(Book book ) {
-		
 	String hq="from  Book where name=:n and author=:a and quantity=:q";
 	Query query=entityManager.createQuery(hq);
-	
 	query.setParameter("n",book.getName());
 	query.setParameter("a",book.getAuthor());
 	query.setParameter("q",book.getQuantity());
 	List list =query.getResultList();
-	
 	if(list.size()>0)
 	{
 		return 0;
@@ -48,14 +40,10 @@ public int RecordExistsOrNot(Book book ) {
 
 	}
 	
-	
-	public List<Book> BookView()
+public List<Book> BookView()
 	{
-		
 		String hql ="from Book";
-		
 		List<Book> booksList1 =new ArrayList<Book>();
-		
 		booksList1 =entityManager.createQuery(hql).getResultList();
 		for(Book Details:booksList1) {
 			System.out.println("id="+Details.getId()+"name="+Details.getName());
@@ -63,17 +51,13 @@ public int RecordExistsOrNot(Book book ) {
 		return booksList1;
 	}
 	
-	public void BookUpdate(int id) {
-		
+public void BookUpdate(int id) {
 		String hq="update Book set name=:n where id=:i";
 		Query query=entityManager.createQuery(hq);
-		
 		query.setParameter("i",id); 
 		//query.setParameter("n",book.getName()); 
 		int status=query.executeUpdate(); 
-		
 		System.out.println(status);
-		
 	}
 
 		/*public void BookUpdate() {
@@ -104,17 +88,12 @@ public int RecordExistsOrNot(Book book ) {
 		*/
 		
 public int BookDelete(int id) {
-			
 			String hq="delete from Book where id=:i";
 			Query query=entityManager.createQuery(hq);
-			
 			query.setParameter("i",id); 
-			
 			int status=query.executeUpdate(); 
-			
 			System.out.println(status);
 			return status;
-			
 		}
 
 public Book getBookById(int id) {
@@ -123,18 +102,13 @@ public Book getBookById(int id) {
 	query.setParameter("i",id1);
 	Object  b=  query.getSingleResult();
 	return b;*/
-	
-	
 	Book ud =entityManager.find(Book.class,id);
 	return ud;
 }
 
 public void updateBook(Book book) {
-
 	entityManager.merge(book);
-	
 }
 
-			
 }
 

@@ -19,13 +19,8 @@ import com.example.demo.model.Customer;
 public class CustomerDao {
 	@PersistenceContext
     private EntityManager entityManager;
-	
-	
 	public void saveCustomer(Customer customer ) {
-		
-		
 		entityManager.persist(customer);
-
 	}
 	
 	public Set<Customer> CustomerView()

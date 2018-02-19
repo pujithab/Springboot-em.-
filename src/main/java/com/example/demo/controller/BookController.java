@@ -24,7 +24,7 @@ public class BookController {
 	BookDao  bdao;
 	
 	@RequestMapping("/booktest")
-	public String booktest(Model model) {
+	public String showform(Model model) {
 		model.addAttribute("testBook", new Book());	
 		List<Book> list=bdao.BookView();
 		model.addAttribute("booksList", list);
@@ -36,15 +36,15 @@ public class BookController {
 	
 	@RequestMapping(value = "/booktest", method = RequestMethod.POST)
 	public String saveAdmin(@Valid @ModelAttribute  Book book,Model model,RedirectAttributes redir) throws IOException {
-		if(book.getId()==0)
+		if(book.getId()==0)  //new record entering insert operation
 		{
 		int result=bdao.RecordExistsOrNot(book);
 		System.out.println( result );
-		if(result == 1)
+		if(result == 1)//record not exist update operation
 		{
 		bdao.saveBook(book);
 		}
-		else
+		else//save the record
 		{
 			redir.addFlashAttribute("msg", "Record exists");
 			redir.addFlashAttribute("cssMsg", "danger");
@@ -52,15 +52,25 @@ public class BookController {
 		}
 		
 		}
-		else
+		else//new record exist or not
 		{
+			int result=bdao.RecordExistsOrNot(book);
+			if(result == 1)//edit operation
+			{
 			bdao.updateBook(book);
 			redir.addFlashAttribute("msg", "Record update successfully");
 			redir.addFlashAttribute("cssMsg", "success");
 			return "redirect:booktest";
-			
+			}
+			else
+				
+			{
+				redir.addFlashAttribute("msg", "Record exists");
+				redir.addFlashAttribute("cssMsg", "danger");
+				return "redirect:booktest";
+			}
+
 		}
-		
 		List<Book> list=bdao.BookView();
 		model.addAttribute("booksList", list);
 		redir.addFlashAttribute("msg", "Record inserted");
@@ -137,7 +147,6 @@ public class BookController {
 	
 	@RequestMapping(value = "/edit")	
 	public String editBook(@RequestParam(value ="id",required=true)String id, Model model,RedirectAttributes redir) {
-
 		int id1= Integer.parseInt(id);
 		Book b= bdao.getBookById(id1);
 		System.out.println(b);
