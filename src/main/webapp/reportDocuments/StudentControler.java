@@ -44,7 +44,6 @@ public class StudentControler {
 			int result = sdao.RecordExistsOrNot(student);
 			System.out.println(result);
 			if (result == 1) {
-				
 				// file upload
 				String filepath = "";
 
@@ -63,11 +62,11 @@ public class StudentControler {
 				}
 				if(null !=student.getFiles()) {
 					
+				
+
 				student.setFiles(fileTemplate.concurrentFileNames());
 				fileTemplate.clearFiles();
 				}
-				
-				
 				sdao.SaveOrUpdate(student);
 				redir.addFlashAttribute("msg", "Record inserted");
 				redir.addFlashAttribute("cssMsg", "success");

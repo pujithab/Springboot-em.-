@@ -1,0 +1,13 @@
+git status
+git add absolute path of file (git add *.java)
+git commit -m "first commit"
+git pull origin master
+git push origin master 
+
+git add src/*
+
+
+
+
+git remote add origin https://github.com/pujithab/Springboot-em.-.git
+git remote -v

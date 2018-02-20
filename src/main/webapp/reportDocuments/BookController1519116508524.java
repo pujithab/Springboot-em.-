@@ -13,10 +13,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.example.demo.config.FilesStuff;
 import com.example.demo.dao.BookDao;
 import com.example.demo.model.Book;
 
@@ -24,9 +22,6 @@ import com.example.demo.model.Book;
 public class BookController {
 	@Autowired
 	BookDao  bdao;
-	@Autowired
-	FilesStuff fileTemplate;
-	
 	
 	@RequestMapping("/booktest")
 	public String showform(Model model) {
@@ -40,43 +35,13 @@ public class BookController {
 	}
 	
 	@RequestMapping(value = "/booktest", method = RequestMethod.POST)
-	public String saveAdmin(@Valid @ModelAttribute  Book book,Model model,RedirectAttributes redir, @RequestParam("file") MultipartFile[] files) throws IOException {
-		
+	public String saveAdmin(@Valid @ModelAttribute  Book book,Model model,RedirectAttributes redir) throws IOException {
 		if(book.getId()==0)  //new record entering insert operation
 		{
 		int result=bdao.RecordExistsOrNot(book);
 		System.out.println( result );
 		if(result == 1)//record not exist update operation
 		{
-			
-			
-			
-			// file upload
-			String filepath = "";
-
-			try {
-				for (MultipartFile multipartFile :files) {
-					String fileName = multipartFile.getOriginalFilename();
-					filepath = filepath + fileName;
-					if (!multipartFile.isEmpty()) {
-						/* task.setUploadfile(fileName); */
-						System.out.println(fileName);
-						multipartFile.transferTo(fileTemplate.moveFileTodir(fileName));
-					}
-				}
-			} catch (IllegalStateException e) {
-				e.printStackTrace();
-			}
-			
-			if(files != null) {
-			System.out.println(book);	
-			book.setFiles(fileTemplate.concurrentFileNames());
-			fileTemplate.clearFiles();
-			System.out.println(book);
-			}	
-			
-			
-			
 		bdao.saveBook(book);
 		}
 		else//save the record
@@ -92,21 +57,6 @@ public class BookController {
 			int result=bdao.RecordExistsOrNot(book);
 			if(result == 1)//edit operation
 			{
-				
-				try {
-					for (MultipartFile multipartFile : files) {
-						String fileName = multipartFile.getOriginalFilename();
-						if (!multipartFile.isEmpty()) {
-							/* task.setUploadfile(fileName); */
-							System.out.println(fileName);
-							multipartFile.transferTo(fileTemplate.moveFileTodir(fileName));
-						}
-					}
-				} catch (IllegalStateException e) {
-					e.printStackTrace();
-				}	
-				
-				
 			bdao.updateBook(book);
 			redir.addFlashAttribute("msg", "Record update successfully");
 			redir.addFlashAttribute("cssMsg", "success");

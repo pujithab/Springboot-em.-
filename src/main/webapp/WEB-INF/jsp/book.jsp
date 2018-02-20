@@ -38,7 +38,7 @@ window.setTimeout(function() {
 			<h1>Student master</h1>
 		</div>
 		<form:form modelAttribute="testBook" class="form-horizontal"
-			action="booktest" method="POST">
+			action="booktest" enctype="multipart/form-data" method="POST">
 			<div class="form-group">
 				<form:hidden path="id" />
 				<label class="col-md-3 control-label no-padding-right">BookName:</label>
@@ -55,6 +55,21 @@ window.setTimeout(function() {
 				<form:input path="quantity" class="col-md-3"
 					placeholder="Enter quantity" />
 			</div>
+			<div class="form-group">
+				<label class="col-md-3 control-label no-padding-right">Mobieno:</label>
+				<form:input path="mobileno" class="col-md-3"
+					placeholder="Enter mobileno" />
+			</div>
+			<div class="form-group">
+										<label class="col-md-3 control-label no-padding-right">Date:</label>
+										<form:input type="datetime-local" path="date" />
+										</div>
+			<div class="form-group">
+										<label class="col-md-3 control-label no-padding-right">Select file:</label>
+										  <input type="file" name="file" id="file" multiple>
+										 </div>
+			
+			
 			<div class="">
 				<input type="submit" id="submit1" class="btn btn-success"
 					value="Create" /> <input class="btn-danger btn cancel" type="reset"
@@ -76,6 +91,10 @@ window.setTimeout(function() {
 						<th>name</th>
 						<th>author</th>
 						<th>quantity</th>
+						<th>mobileno</th>
+						<th>Date</th>
+						<th>fileupload</th>
+						<th>filedownload</th>
 						<th>options</th>
 					</tr>
 					<c:forEach var="list" items="${booksList}">
@@ -84,6 +103,14 @@ window.setTimeout(function() {
 							<td>${list.name }</td>
 							<td>${list.author}</td>
 							<td>${list.quantity}</td>
+							<td>${list.mobileno}</td>
+							<td>${list.date}</td>
+							<td>${list.files}</td>
+							<td><c:if test="${not empty list.files}">
+			    <c:forTokens items="${list.files}" delims="*" var="mySplit">
+			<a class="attachments" target="_blank" href="reportDocuments/${mySplit}"><i class="fa fa-paperclip fa-lg grey" title="${mySplit}"></i></a>
+		    </c:forTokens>
+		   </c:if> </td>
 							<td><a href="delete?id=${list.id}"> <i
 									class="fa fa-trash"></i>
 							</a> <a href="edit?id=${list.id}"> <i class="fa fa-edit"></i></a></td>

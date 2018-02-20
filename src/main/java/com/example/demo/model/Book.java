@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+
 @Entity
 public class Book {
 	@Id
@@ -14,21 +15,45 @@ public class Book {
 		private int id;
 		private String name;
 		private String author;
-		private int quantity;
+		private String quantity;
+		private String mobileno;
+		private String date;
+		private String files;
 		
 
-		public Book(int id, String name, String author, int quantity) {
+		public Book(int id, String name, String author, String quantity, String files, String mobileno, String date) {
 			super();
 			this.id = id;
 			this.name = name;
 			this.author = author;
 			this.quantity = quantity;
+			this.mobileno= mobileno;
+			this.date=date;
+			this.files=files;
 		}
 		public Book() {
 			
 		}
 		
-
+		
+		public String getDate() {
+			return date;
+		}
+		public void setDate(String date) {
+			this.date = date;
+		}
+		public String getMobileno() {
+			return mobileno;
+		}
+		public void setMobileno(String mobileno) {
+			this.mobileno = mobileno;
+		}
+		public String getFiles() {
+			return files;
+		}
+		public void setFiles(String files) {
+			this.files = files;
+		}
 		public int getId() {
 			return id;
 		}
@@ -53,53 +78,20 @@ public class Book {
 			this.author = author;
 		}
 
-		public int getQuantity() {
+		public String getQuantity() {
 			return quantity;
 		}
 
-		public void setQuantity(int quantity) {
+		public void setQuantity(String quantity) {
 			this.quantity = quantity;
 		}
 
 		@Override
 		public String toString() {
-			return "Book [id=" + id + ", name=" + name + ", author=" + author + ", quantity=" + quantity + "]";
+			return "Book [id=" + id + ", name=" + name + ", author=" + author + ", quantity=" + quantity + ", mobileno="
+					+ mobileno + ", date=" + date + ", files=" + files + "]";
 		}
-		@Override
-		public int hashCode() {
-			final int prime = 31;
-			int result = 1;
-			result = prime * result + ((author == null) ? 0 : author.hashCode());
-			result = prime * result + id;
-			result = prime * result + ((name == null) ? 0 : name.hashCode());
-			result = prime * result + quantity;
-			return result;
-		}
-		@Override
-		public boolean equals(Object obj) {
-			if (this == obj)
-				return true;
-			if (obj == null)
-				return false;
-			if (getClass() != obj.getClass())
-				return false;
-			Book other = (Book) obj;
-			if (author == null) {
-				if (other.author != null)
-					return false;
-			} else if (!author.equals(other.author))
-				return false;
-			if (id != other.id)
-				return false;
-			if (name == null) {
-				if (other.name != null)
-					return false;
-			} else if (!name.equals(other.name))
-				return false;
-			if (quantity != other.quantity)
-				return false;
-			return true;
-		}
+		
 		
 
 		

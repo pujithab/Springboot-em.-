@@ -1,0 +1,23 @@
+@Repository
+@Transactional
+public class StudentDao {
+	
+	@Autowired
+	SessionFactory sessionFactory;
+	
+	public void setSessionFactory(SessionFactory sf) {
+		this.sessionFactory = sf;
+	}
+
+
+
+
+
+
+ public void SaveOrUpdate(Student student)
+  {
+	  sessionFactory.getCurrentSession().saveOrUpdate(student);
+	  
+  }
+
+
