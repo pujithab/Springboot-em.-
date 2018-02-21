@@ -24,11 +24,12 @@ public class BookDao {
 	}
 	
 public int RecordExistsOrNot(Book book ) {
-	String hq="from  Book where name=:n and author=:a and quantity=:q";
+	String hq="from  Book where name=:n and author=:a and quantity=:q and mobileno=:m";
 	Query query=entityManager.createQuery(hq);
 	query.setParameter("n",book.getName());
 	query.setParameter("a",book.getAuthor());
 	query.setParameter("q",book.getQuantity());
+	query.setParameter("m", book.getMobileno());
 	List list =query.getResultList();
 	if(list.size()>0)
 	{

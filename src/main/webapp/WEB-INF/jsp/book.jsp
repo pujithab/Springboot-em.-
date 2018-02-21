@@ -72,7 +72,7 @@ window.setTimeout(function() {
 			
 			<div class="">
 				<input type="submit" id="submit1" class="btn btn-success"
-					value="Create" /> <input class="btn-danger btn cancel" type="reset"
+					value="submit" /> <input class="btn-danger btn cancel" type="reset"
 					value="Reset" />
 			</div>
 

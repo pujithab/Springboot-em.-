@@ -1,0 +1,17 @@
+public Map<Integer, String> getorgDeptNames()
+	{
+		Map<Integer, String> rolesMap = new LinkedHashMap<Integer, String>();
+		try
+		{
+		List<OrgDept> rolesList= orgDeptDao.getorgDeptNames();
+		for(OrgDept bean: rolesList){
+			rolesMap.put(bean.getId(), bean.getDept());
+		}
+				
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+		return rolesMap;
+				
+		
+	}

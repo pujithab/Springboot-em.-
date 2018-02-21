@@ -52,13 +52,16 @@ public class BookController {
 			
 			
 			// file upload
-			String filepath = "";
+			
+			int filesCount =0;
 
 			try {
 				for (MultipartFile multipartFile :files) {
 					String fileName = multipartFile.getOriginalFilename();
-					filepath = filepath + fileName;
 					if (!multipartFile.isEmpty()) {
+						
+						filesCount++;
+						
 						/* task.setUploadfile(fileName); */
 						System.out.println(fileName);
 						multipartFile.transferTo(fileTemplate.moveFileTodir(fileName));
@@ -68,7 +71,9 @@ public class BookController {
 				e.printStackTrace();
 			}
 			
-			if(files != null) {
+			System.out.println(files.length);
+			
+			if(filesCount >0) {
 			System.out.println(book);	
 			book.setFiles(fileTemplate.concurrentFileNames());
 			fileTemplate.clearFiles();
@@ -92,18 +97,26 @@ public class BookController {
 			int result=bdao.RecordExistsOrNot(book);
 			if(result == 1)//edit operation
 			{
-				
+				int filesCount =0;
 				try {
 					for (MultipartFile multipartFile : files) {
 						String fileName = multipartFile.getOriginalFilename();
 						if (!multipartFile.isEmpty()) {
-							/* task.setUploadfile(fileName); */
+							
+							filesCount++;
 							System.out.println(fileName);
 							multipartFile.transferTo(fileTemplate.moveFileTodir(fileName));
 						}
 					}
 				} catch (IllegalStateException e) {
 					e.printStackTrace();
+				}	
+				System.out.println(files.length);
+				if(filesCount >0) {
+				System.out.println(book);	
+				book.setFiles(fileTemplate.concurrentFileNames());
+				fileTemplate.clearFiles();
+				System.out.println(book);
 				}	
 				
 				

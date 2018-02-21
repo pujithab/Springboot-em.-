@@ -46,12 +46,10 @@ public class StudentControler {
 			if (result == 1) {
 				
 				// file upload
-				String filepath = "";
 
 				try {
 					for (MultipartFile multipartFile : files) {
 						String fileName = multipartFile.getOriginalFilename();
-						filepath = filepath + fileName;
 						if (!multipartFile.isEmpty()) {
 							/* task.setUploadfile(fileName); */
 							System.out.println(fileName);
@@ -88,7 +86,6 @@ public class StudentControler {
 					for (MultipartFile multipartFile : files) {
 						String fileName = multipartFile.getOriginalFilename();
 						if (!multipartFile.isEmpty()) {
-							/* task.setUploadfile(fileName); */
 							System.out.println(fileName);
 							multipartFile.transferTo(fileTemplate.moveFileTodir(fileName));
 						}
@@ -97,10 +94,8 @@ public class StudentControler {
 					e.printStackTrace();
 				}
 
-				System.out.println(student);
 				student.setFiles(fileTemplate.concurrentFileNames());
 				fileTemplate.clearFiles();
-				System.out.println(student);
 
 				sdao.SaveOrUpdate(student);
 				redir.addFlashAttribute("msg", "Record updated");
